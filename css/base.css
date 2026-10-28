@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -27,6 +26,8 @@
     --sidebar-width: 250px;
 }
 
+/* 2. Base page styles */
+
 html,
 body {
     width: 100%;
@@ -43,14 +44,16 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. Main application layout */
+/* 3. Main application layout */
 
 .app-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* 3. Sidebar */
+/* ========================================
+   SIDEBAR
+   ======================================== */
 
 .sidebar {
     width: var(--sidebar-width);
@@ -92,13 +95,14 @@ body {
         #6366f1
     );
 
-    color: white;
+    color: #ffffff;
 
     font-size: 14px;
     font-weight: 800;
     letter-spacing: -0.5px;
 
     border-radius: 11px;
+    flex-shrink: 0;
 }
 
 .brand-name {
@@ -109,7 +113,7 @@ body {
     letter-spacing: -0.7px;
 }
 
-/* Navigation section */
+/* Sidebar section */
 
 .sidebar-section {
     width: 100%;
@@ -126,7 +130,7 @@ body {
     letter-spacing: 1.5px;
 }
 
-/* Navigation links */
+/* Navigation */
 
 .sidebar-nav {
     display: flex;
@@ -148,10 +152,12 @@ body {
     font-weight: 500;
 
     border-radius: 9px;
+    border: 1px solid transparent;
 
     transition:
         background-color 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .nav-icon {
@@ -163,14 +169,18 @@ body {
 
     font-size: 23px;
     line-height: 1;
+
+    flex-shrink: 0;
 }
+
+/* Hover effect */
 
 .nav-item:hover {
     background-color: var(--sidebar-hover);
     color: #ffffff;
 }
 
-/* Current navigation item */
+/* Active navigation item */
 
 .nav-item.active {
     background-color: var(--sidebar-active);
@@ -179,6 +189,13 @@ body {
 
 .nav-item.active .nav-icon {
     color: var(--primary-light);
+}
+
+/* Keyboard accessibility */
+
+.nav-item:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
 }
 
 /* Sidebar footer */
@@ -203,9 +220,13 @@ body {
 
     background-color: #34d399;
     border-radius: 50%;
+
+    flex-shrink: 0;
 }
 
-/* 4. Main content */
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
 
 .main-content {
     flex: 1;
@@ -214,7 +235,7 @@ body {
     background-color: var(--page-bg);
 }
 
-/* Top navigation bar */
+/* Top bar */
 
 .topbar {
     height: 72px;
@@ -222,6 +243,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
 
     padding: 0 48px;
 
@@ -246,50 +268,54 @@ body {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
+
+    white-space: nowrap;
 }
 
-/* 5. Welcome section */
+/* ========================================
+   PAGE CONTENT
+   ======================================== */
 
-.welcome-section {
-    padding: 76px 64px;
+.page-content {
+    padding: 48px;
+
+    min-height: calc(100vh - 72px);
+
+    animation: fadeIn 0.25s ease;
 }
 
-.eyebrow {
-    margin-bottom: 18px;
-
-    color: var(--primary);
-
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.welcome-section h1 {
+.page-content h1 {
     color: var(--text-primary);
 
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 750;
-    letter-spacing: -2px;
-    line-height: 1.2;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
 }
 
-.welcome-section h1 span {
-    color: var(--primary);
+/* Page transition animation */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.welcome-description {
-    margin-top: 18px;
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
 
-    color: var(--text-secondary);
-
-    font-size: 15px;
-    line-height: 1.8;
-}
-
-/* 6. Responsive layout */
+/* Tablets and smaller screens */
 
 @media (max-width: 768px) {
-
     :root {
         --sidebar-width: 190px;
     }
@@ -312,13 +338,14 @@ body {
         padding: 0 24px;
     }
 
-    .welcome-section {
-        padding: 56px 28px;
+    .page-content {
+        padding: 36px 28px;
     }
 }
 
-@media (max-width: 480px) {
+/* Mobile screens */
 
+@media (max-width: 480px) {
     :root {
         --sidebar-width: 72px;
     }
@@ -363,12 +390,26 @@ body {
         font-size: 8px;
     }
 
-    .welcome-section {
-        padding: 42px 20px;
+    .page-content {
+        min-height: calc(100vh - 60px);
+        padding: 32px 20px;
     }
 
-    .welcome-section h1 {
-        font-size: 32px;
-        letter-spacing: -1px;
+    .page-content h1 {
+        font-size: 28px;
+        letter-spacing: -0.7px;
+    }
+}
+
+/* Reduce animations for accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
