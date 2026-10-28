@@ -8,13 +8,13 @@ const pageTitle = document.getElementById("page-title");
 // Define the content for each page.
 const pages = {
     graph: {
-        title: "Graph",
-        heading: "Page 1"
+        title: "Data Graph",
+        heading: "Test sentence 1"
     },
 
     probability: {
         title: "Probability",
-        heading: "Page 2"
+        heading: "test "
     }
 };
 
